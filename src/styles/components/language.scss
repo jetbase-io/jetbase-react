@@ -1,0 +1,62 @@
+.language-selector {
+  font-family: $font-secondary;
+  position: absolute;
+  right: 30px;
+  top: 10px;
+
+  .toggle-container {
+    background-color: #fff;
+    border-radius: 16px;
+    color: #B9BCBE;
+    cursor: pointer;
+    height: 30px;
+    line-height: 28px;
+    padding: 1px 2px;
+    position: relative;
+    width: 100px;
+  }
+  .language-item {
+    background: none;
+    border: none;
+    display: inline-block;
+    float: left;
+    font-size: 12px;
+    height: 29px;
+    line-height: 1.4;
+    outline: none;
+    padding: 6px 0;
+    text-align: center;
+    width: 50%;
+  }
+  .language-text {
+    display: inline-block;
+    color: #979797;
+    font-family: $font-secondary;
+    vertical-align: top;
+  }
+  i {
+    margin-right: 5px;
+  }
+  .selector {
+    position: absolute;
+    left: 1px;
+    width: 50%;
+    background: #07A4FF;
+    color: #FFF;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 12px;
+    transition: all 0.3s ease;
+
+    .language-text {
+      color: #FFF;
+    }
+
+    &.fr {
+      left: 1px;
+    }
+    &.en {
+      left: 49px;
+    }
+  }
+}

@@ -1,26 +1,46 @@
 import {
-  REQUEST_LOGIN, RECEIVE_LOGIN, REQUEST_LOGOUT, REQUEST_ACCOUNT, RECEIVE_ACCOUNT,
+  CHANGE_LANGUAGE,
+  REQUEST_FORGOT,
+  RECEIVE_FORGOT,
+  REQUEST_RESET,
+  RECEIVE_RESET,
+  REQUEST_LOGIN,
+  RECEIVE_LOGIN,
+  REQUEST_LOGOUT,
+  REQUEST_ACCOUNT,
+  RECEIVE_ACCOUNT,
+  REQUEST_SIGNUP,
+  RECEIVE_SIGNUP,
 } from '../actions/account';
-import ability, { defineRulesFor } from '../ability';
 
 const reducer = (state = {
-  profile: {}, user: null, loading: false, loadingAccount: false,
+  profile: {}, user: null, loading: false, loadingAccount: false, language: 'en',
 }, action) => {
   const user = {};
   switch (action.type) {
+    case CHANGE_LANGUAGE:
+      return { ...state, language: action.lang };
+    case REQUEST_FORGOT:
+      return { ...state, loading: true };
+    case RECEIVE_FORGOT:
+      return { ...state, loading: false };
+    case REQUEST_RESET:
+      return { ...state, loading: true };
+    case RECEIVE_RESET:
+      return { ...state, loading: false };
+    case REQUEST_SIGNUP:
+      return { ...state, loading: true };
+    case RECEIVE_SIGNUP:
+      return { ...state, loading: false };
     case REQUEST_LOGIN:
       return { ...state, loading: true };
     case RECEIVE_LOGIN:
       user.authdata = action.token;
-      user.permissions = action.permissions;
       if (action.keep) {
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('currentUserId', action.id);
+        // localStorage.setItem('user', JSON.stringify(user));
       } else {
-        sessionStorage.setItem('user', JSON.stringify(user));
-        sessionStorage.setItem('currentUserId', action.id);
+        // sessionStorage.setItem('user', JSON.stringify(user));
       }
-      ability.update(defineRulesFor(action.permissions));
       return { ...state, user, loading: false };
     case REQUEST_LOGOUT:
       return { ...state, user: null };

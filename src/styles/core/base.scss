@@ -1,0 +1,14 @@
+a {
+  font-family: $font-primary;
+  text-decoration: underline;
+}
+
+.btn-primary {
+  &:disabled {
+    background-color: #EBECF0 !important;
+    border-color: #EBECF0;
+    color: #B9BCBE;
+    opacity: 1;
+    pointer-events: none;
+  }
+}

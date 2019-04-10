@@ -1,0 +1,19 @@
+- name: ecomting-frontend deployment
+  hosts: all
+  sudo: true
+  vars:
+    repository: https://github.com/luckydays/ecomting-frontend
+    path: /home/ubuntu/client
+    image: ecomting/ecomting-frontend
+  tasks:
+    # - name: Pull github code
+    #   git: repo={{ repository }}
+    #        dest={{ path }}
+
+    - name: Pull API container
+      shell: docker pull {{ image }}
+
+    - name: Start API container
+      shell: docker-compose -f docker-compose.prod.yml up -d ecomting_frontend
+      args:
+        chdir: "{{ path }}"

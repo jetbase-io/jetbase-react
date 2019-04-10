@@ -32,7 +32,7 @@ class UserRow extends Component {
 }
 
 UserRow.propTypes = {
-  user: PropTypes.oneOf(PropTypes.object),
+  user: PropTypes.shape,
 };
 
 UserRow.defaultProps = {

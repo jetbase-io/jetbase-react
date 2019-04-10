@@ -1,10 +1,10 @@
-import Account from './containers/account';
-import ChangePassword from './containers/account/password';
-import Home from './containers/home';
-import User from './containers/users/show';
-import UserEdit from './containers/users/edit';
-import UserNew from './containers/users/new';
-import Users from './containers/users';
+import Account from '../containers/account';
+import ChangePassword from '../containers/account/password';
+import Home from '../containers/home';
+import User from '../containers/users/show';
+import UserEdit from '../containers/users/edit';
+import UserNew from '../containers/users/new';
+import Users from '../containers/users';
 
 const routes = [
   {
