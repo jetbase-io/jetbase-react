@@ -32,7 +32,7 @@ export const createUser = params => (
     const headers = authHeader();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
     const body = encodeParams(decamelizeKeys(params));
-    return fetch(`${ENV.REACT_APP_API_SERVER}/users`, { method: 'POST', headers, body })
+    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users`, { method: 'POST', headers, body })
       .then(
         response => (response.status === 200 ? response.json() : response),
         error => error,
@@ -53,7 +53,7 @@ export const createUser = params => (
 export const deleteUser = id => (
   (dispatch) => {
     dispatch(requestUsers());
-    return fetch(`${ENV.REACT_APP_API_SERVER}/users/${id}`, { method: 'DELETE', headers: authHeader() })
+    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${id}`, { method: 'DELETE', headers: authHeader() })
       .then(
         response => (response.status === 200 ? response.json() : response),
         error => error,
@@ -74,7 +74,7 @@ export const deleteUser = id => (
 export const fetchUsers = () => (
   (dispatch) => {
     dispatch(requestUsers());
-    return fetch(`${ENV.REACT_APP_API_SERVER}/users`, { method: 'GET', headers: authHeader() })
+    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users`, { method: 'GET', headers: authHeader() })
       .then(
         response => (response.status === 200 ? response.json() : response),
         error => error,
@@ -97,7 +97,7 @@ export const fetchUsers = () => (
 export const fetchUser = id => (
   (dispatch) => {
     dispatch(requestUsers());
-    return fetch(`${ENV.REACT_APP_API_SERVER}/users/${id}`, { method: 'GET', headers: authHeader() })
+    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${id}`, { method: 'GET', headers: authHeader() })
       .then(
         response => (response.status === 200 ? response.json() : response),
         error => error,
@@ -121,7 +121,7 @@ export const saveUser = (id, params) => (
     const body = encodeParams(params);
     const headers = authHeader();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    return fetch(`${ENV.REACT_APP_API_SERVER}/users/${id}`, { method: 'PUT', headers, body })
+    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${id}`, { method: 'PUT', headers, body })
       .then(
         response => (response.status === 200 ? response.json() : response),
         error => error,

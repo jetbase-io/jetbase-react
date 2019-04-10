@@ -8,10 +8,10 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import routes from '../../routes/index';
-import guestRoutes from '../../routes/guest';
+import routes from '../../routes';
 import Header from '../../components/header/index';
 import Sidebar from '../../components/sidebar/index';
+import Login from '../login';
 import { userSession } from '../../helpers/user';
 import ability, { defineRulesFor } from '../../ability';
 
@@ -74,29 +74,16 @@ class App extends Component {
         </div>
       );
     }
-    return (
-      <Switch>
-        {guestRoutes.map(route => (route.component ? (
-          <Route
-            key={route.name}
-            path={route.path}
-            exact={route.exact}
-            name={route.name}
-            render={props => (<route.component {...props} />)}
-          />
-        ) : (null)))}
-      </Switch>
-    );
+    return (<Login />);
   }
 }
 
 App.defaultProps = {
-  history: {},
   location: { pathname: '' },
 };
 
 App.propTypes = {
-  history: PropTypes.shape(PropTypes.object),
+  history: PropTypes.func.isRequired,
   location: PropTypes.shape(PropTypes.object),
 };
 

@@ -31,7 +31,7 @@ class Header extends PureComponent {
     const { profile } = this.props;
     return (
       <Nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <Link className="navbar-brand col-sm-3 col-md-2 mr-0" to="/">Ecomting</Link>
+        <Link className="navbar-brand col-sm-3 col-md-2 mr-0" to="/">JetBase</Link>
         <Nav className="ml-auto" navbar>
           <UncontrolledDropdown direction="down">
             <DropdownToggle nav className="p-3">
@@ -62,7 +62,7 @@ Header.propTypes = {
   getAccount: PropTypes.func.isRequired,
   goToLogin: PropTypes.func.isRequired,
   logoutAction: PropTypes.func.isRequired,
-  profile: PropTypes.shape,
+  profile: PropTypes.oneOf(PropTypes.object),
 };
 
 Header.defaultProps = {

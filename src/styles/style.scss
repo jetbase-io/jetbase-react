@@ -1,10 +1,4 @@
 @import "variables";
-@import "~bootstrap/scss/bootstrap.scss";
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import "custom";
 @import "ie-fix";
-@import "core/base.scss";
-@import "core/form.scss";
-@import "core/icons.scss";
-@import "components/language.scss";
-@import "components/welcome.scss";
-@import "pages/login.scss";

@@ -1,4 +1,4 @@
-# Ecomting React Dashboard
+# JetBase React Dashboard
 
 Web client application with dashboard
 
