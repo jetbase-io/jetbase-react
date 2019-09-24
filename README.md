@@ -30,3 +30,19 @@ npm start
 ```
 npm run build
 ```
+---
+## Run in docker
+
+### Building 
+
+```
+docker build -t jetbase-react .
+```
+
+### Runing 
+
+```
+docker run -p 9900:3000 jetbase-react
+```
+
+now you can access jetbase-react app on port `:9900`
