@@ -52,7 +52,7 @@ class Account extends React.Component {
     const {
       firstName, lastName, email, saved, submitted,
     } = this.state;
-    if (!profile) {
+    if (!profile || Object.keys(profile).length === 0) {
       return (null);
     }
     console.log(errors);

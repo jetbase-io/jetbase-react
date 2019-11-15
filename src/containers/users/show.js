@@ -26,7 +26,7 @@ class User extends React.Component {
 
   render() {
     const { user } = this.props;
-    if (!user || user === {}) {
+    if (!user || Object.keys(user).length === 0) {
       return (null);
     }
     return (
@@ -95,7 +95,7 @@ User.defaultProps = {
 };
 
 const mapStateToProps = ({ users }, ownProps) => ({
-  user: users.items.find(user => user.id === ownProps.match.params.id, 10),
+  user: users.items[ownProps.match.params.id],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({

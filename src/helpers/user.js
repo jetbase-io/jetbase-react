@@ -1,7 +1,4 @@
 export const userSession = () => (localStorage.getItem('user') || sessionStorage.getItem('user'));
-
-export const encodeParams = params => (
-  Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`).join('&')
-);
+export const currentUserId = () => (localStorage.getItem('currentUserId') || sessionStorage.getItem('currentUserId'));
 
 export default userSession;

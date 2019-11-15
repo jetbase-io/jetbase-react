@@ -32,7 +32,7 @@ class UserEdit extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { saveUserAction, goToShow, resetErrorAction } = this.props;
+    const { goToShow, resetErrorAction, saveUserAction } = this.props;
     resetErrorAction();
     const {
       firstName, lastName, email,
@@ -52,7 +52,7 @@ class UserEdit extends React.Component {
     const {
       firstName, lastName, email, submitted,
     } = this.state;
-    if (!user) {
+    if (!user || Object.keys(user).length === 0) {
       return (null);
     }
     return (
@@ -125,7 +125,7 @@ UserEdit.propTypes = {
 };
 
 const mapStateToProps = ({ users }, ownProps) => ({
-  user: users.items.find(user => user.id === ownProps.match.params.id),
+  user: users.items[ownProps.match.params.id],
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({

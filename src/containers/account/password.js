@@ -35,13 +35,13 @@ class ChangePassword extends React.Component {
     resetErrorAction();
     this.setState({ submitted: true });
     const {
-      oldpassword, newpassword,
+      oldPassword, newPassword,
     } = this.state;
-    if (!oldpassword || !newpassword) {
+    if (!oldPassword || !newPassword) {
       return;
     }
     const body = {
-      oldpassword, newpassword,
+      oldPassword, newPassword,
     };
     changePasswordAction(body).then(() => this.setState({ saved: true }));
   }
@@ -49,7 +49,7 @@ class ChangePassword extends React.Component {
   render() {
     const { errors } = this.props;
     const {
-      oldpassword, newpassword, saved, submitted,
+      oldPassword, newPassword, saved, submitted,
     } = this.state;
     console.log(errors);
     return (
@@ -70,8 +70,8 @@ class ChangePassword extends React.Component {
                       id="old"
                       type="password"
                       placeholder="Old password"
-                      invalid={submitted && !oldpassword}
-                      onChange={e => this.handleChange(e, 'oldpassword')}
+                      invalid={submitted && !oldPassword}
+                      onChange={e => this.handleChange(e, 'oldPassword')}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -80,8 +80,8 @@ class ChangePassword extends React.Component {
                       id="new"
                       type="password"
                       placeholder="New password"
-                      invalid={submitted && !newpassword}
-                      onChange={e => this.handleChange(e, 'newpassword')}
+                      invalid={submitted && !newPassword}
+                      onChange={e => this.handleChange(e, 'newPassword')}
                     />
                   </FormGroup>
                 </CardBody>

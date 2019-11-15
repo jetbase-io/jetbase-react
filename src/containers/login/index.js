@@ -94,7 +94,7 @@ class Login extends Component {
                       </InputGroup>
                       <Row>
                         <Col xs="12">
-                          <p className="text-muted">{errors ? errors.status : ''}</p>
+                          <p className="text-muted">{errors ? errors.status.join(' ') : ''}</p>
                         </Col>
                         <Col xs="12">
                           <Button color="primary" className="px-4" disabled={loading}>{loading ? 'Loading' : 'Login'}</Button>

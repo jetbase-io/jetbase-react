@@ -1,4 +1,5 @@
-import { userSession, encodeParams } from '../helpers/user';
+import { get, post, put } from '../helpers/api';
+import { currentUserId, userSession } from '../helpers/user';
 import { responseError } from './errors';
 
 require('dotenv').config();
@@ -11,14 +12,16 @@ export const REQUEST_LOGOUT = 'REQUEST_LOGOUT';
 export const REQUEST_ACCOUNT = 'REQUEST_ACCOUNT';
 export const RECEIVE_ACCOUNT = 'RECEIVE_ACCOUNT';
 
-const currentUserId = () => sessionStorage.getItem('currentUserId');
+const ENTITY_URL = `${ENV.REACT_APP_API_SERVER}/api/v1/users/${currentUserId()}`;
 
-export const authHeader = () => {
+export const prepareHeader = () => {
+  const headers = {};
   const user = JSON.parse(userSession());
   if (user && user.authdata) {
-    return { Authorization: `Bearer ${user.authdata}` };
+    headers.Authorization = `Bearer ${user.authdata}`;
   }
-  return {};
+  headers['Content-Type'] = 'application/json';
+  return headers;
 };
 
 export const localLogin = (email, password, keep) => ({
@@ -53,7 +56,6 @@ export const receivedAccount = json => ({
   json,
 });
 
-
 export const logout = () => (
   (dispatch) => {
     sessionStorage.removeItem('user');
@@ -62,93 +64,73 @@ export const logout = () => (
   }
 );
 
+export const catchErrorAccount = (dispatch, error) => {
+  if (error.status === 401) {
+    dispatch(logout());
+  } else {
+    error.json().then(body => dispatch(responseError(body.errors)));
+  }
+};
+
 export const login = (email, password, keep) => (
   (dispatch) => {
     dispatch(requestLogin());
-    const body = encodeParams({ email, password });
-    const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/login`, { method: 'POST', headers, body })
-      .then(
-        response => (response.status === 200 ? response.json() : response),
-        error => error,
-      )
-      .then((json) => {
-        if (String(json).includes('TypeError')) {
-          dispatch(responseError('Problems with server'));
-        } else if (json.status === 401) {
-          dispatch(responseError('User or password incorrect'));
-        } else {
-          dispatch(receivedLogin(json.id, json.token, json.permissions, keep));
-        }
-      });
+    return post(
+      `${ENV.REACT_APP_API_SERVER}/api/v1/login`,
+      prepareHeader(),
+      { email, password },
+      (json) => {
+        dispatch(receivedLogin(json.id, json.token, json.permissions, keep));
+        return json;
+      },
+      error => catchErrorAccount(dispatch, error),
+    );
   }
 );
 
 export const changePassword = params => (
   (dispatch) => {
     dispatch(requestAccount());
-    const body = encodeParams(params);
-    const headers = authHeader();
-    headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${currentUserId()}/password`, { method: 'PUT', headers, body })
-      .then(
-        response => (response.status === 200 ? response.json() : response),
-        error => error,
-      )
-      .then((json) => {
-        if (String(json).includes('TypeError')) {
-          dispatch(responseError('Problems with server'));
-        } else if (json.status === 401) {
-          dispatch(responseError('User or password incorrect'));
-        } else {
-          dispatch(receivedAccount(json));
-        }
+    return put(
+      `${ENTITY_URL}/password`,
+      prepareHeader(),
+      params,
+      (json) => {
+        dispatch(receivedAccount(json));
         return json;
-      });
+      },
+      error => catchErrorAccount(dispatch, error),
+    );
   }
 );
 
 export const fetchAccount = () => (
   (dispatch) => {
     dispatch(requestAccount());
-    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${currentUserId()}`, { method: 'GET', headers: authHeader() })
-      .then(
-        response => (response.status === 200 ? response.json() : response),
-        error => error,
-      )
-      .then((json) => {
-        if (String(json).includes('TypeError')) {
-          dispatch(responseError('Problems with server'));
-        } else if (json.status === 401) {
-          dispatch(logout());
-        } else {
-          dispatch(receivedAccount(json));
-        }
+    return get(
+      `${ENV.REACT_APP_API_SERVER}/api/v1/users/current`,
+      prepareHeader(),
+      (json) => {
+        dispatch(receivedAccount(json));
         return json;
-      });
+      },
+      error => catchErrorAccount(dispatch, error),
+    );
   }
 );
 
 export const saveAccount = params => (
   (dispatch) => {
     dispatch(requestAccount());
-    const body = encodeParams(params);
-    const headers = authHeader();
-    headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    return fetch(`${ENV.REACT_APP_API_SERVER}/api/v1/users/${currentUserId()}`, { method: 'PUT', headers, body })
-      .then(
-        response => (response.status === 200 ? response.json() : response),
-        error => error,
-      )
-      .then((json) => {
-        if (String(json).includes('TypeError')) {
-          dispatch(responseError('Problems with server'));
-        } else if (json.status === 401) {
-          dispatch(responseError('User or password incorrect'));
-        } else {
-          dispatch(receivedAccount(json));
-        }
+    return put(
+      ENTITY_URL,
+      prepareHeader(),
+      params,
+      (json) => {
+        dispatch(receivedAccount(json));
         return json;
-      });
+      },
+      error => catchErrorAccount(dispatch, error),
+    );
   }
 );

@@ -63,7 +63,7 @@ Users.defaultProps = {
 
 const mapStateToProps = ({ users }) => ({
   loading: users.loading,
-  users: users.items,
+  users: Object.values(users.items),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
